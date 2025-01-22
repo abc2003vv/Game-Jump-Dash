@@ -1,38 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EntitySpawner2 : MonoBehaviour
 {
-    public GameObject obstaclePrefab;    // Prefab chướng ngại vật
-    public float spawnInterval = 1f;     // Khoảng thời gian giữa các lần spawn
+    public GameObject[] EntityPrefabs; // Danh sách các prefab chướng ngại vật
+    public float XLeft = -2f;            // TargetLerf trên trục X
+    public float XRight = 2f;            // TargetRight trên trục X
+    public float spawnYPosition = 6f;   // Vị trí Y spawn (phía trên màn hình)
+    public float fallSpeed = -5f;       // Tốc độ rơi của chướng ngại vật
 
-    // Phạm vi vị trí spawn (Vector2: xMin, xMax)
-    public Vector2 spawnRangeX = new Vector2(-2f, 2f);
-    public float spawnYPosition = 6f;   // Vị trí Y spawn nằm ngoài màn hình (phía trên)
-
-    void Start()
+    private void Start()
     {
-        // Gọi hàm SpawnObstacle sau mỗi khoảng thời gian spawnInterval
-        InvokeRepeating(nameof(SpawnObstacle), 0f, spawnInterval);
+        // Bắt đầu spawn với khoảng thời gian spawnInterval
+        InvokeRepeating(nameof(Spawn), 0f, 0.5f);
     }
-
-    void SpawnObstacle()
+    private void Spawn()
     {
-        // Lấy vị trí X ngẫu nhiên trong phạm vi spawnRangeX
-        float randomX = Random.Range(spawnRangeX.x, spawnRangeX.y);
-
-        // Tạo vị trí spawn
+        // Chọn vị trí spawn ngẫu nhiên trong phạm vi từ XLeft đến XRight
+        float randomX = Random.Range(XLeft, XRight);
         Vector2 spawnPosition = new Vector2(randomX, spawnYPosition);
 
-        // Tạo chướng ngại vật tại vị trí đã chọn
-        GameObject obstacle = Instantiate(obstaclePrefab, spawnPosition, Quaternion.identity);
+        // Random chọn một prefab từ danh sách obstaclePrefabs
+        GameObject random = EntityPrefabs[Random.Range(0, EntityPrefabs.Length)];
 
-        // Kiểm tra nếu chướng ngại vật có Rigidbody2D để thêm chuyển động
+        // Tạo đối tượng tại vị trí đã chọn
+        GameObject obstacle = Instantiate(random, spawnPosition, Quaternion.identity);
+
+        // nếu OBJ có RB thì gán cho đối tượng đó 
         Rigidbody2D rb = obstacle.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.velocity = new Vector2(0f, -5f);  // Tốc độ rơi
+            rb.velocity = new Vector2(0f, fallSpeed); // Gán vận tốc rơi xuống
         }
     }
 }
