@@ -1,15 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 public class UIManager : MonoBehaviour
 {
     public GameObject PanelGameover;
     public GameObject PanelStar;
+    AudioManager audioManager;
+
     // start game
     public void startGame()
     {
         PanelStar.SetActive(false);
         Time.timeScale = 1;
+        audioManager.PlayMucsic();
     }
     void Start()
     {
@@ -20,7 +22,7 @@ public class UIManager : MonoBehaviour
     {
         PanelGameover.SetActive(true);
         Time.timeScale = 0;
-        
+        audioManager.stopBackMusic();
       
     }
     //Restart game
@@ -32,6 +34,5 @@ public class UIManager : MonoBehaviour
         }
         SceneManager.LoadScene("Scene"); 
     }
-    // Update is called once per frame
    
 }

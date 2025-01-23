@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Entity
   - Ball
+  - Audio
   layers:
   - Default
   - TransparentFX

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    
+
     [SerializeField] private float speed = 25f;      // Tốc độ di chuyển
     [SerializeField] private Transform Targetlerf;  // Giới hạn bên trái
     [SerializeField] private Transform TargetrIght; // Giới hạn bên phải
@@ -14,9 +14,14 @@ public class BallController : MonoBehaviour
     private Rigidbody2D rb;         // RigidBody2D của quả bóng
     
     GameManager gameManager;
+
+    AudioManager audioManager;
+
+    
+
     private void Awake()
     {
-        // Gán AudioManager nếu có
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();  // gọi Audio
     }
     private void Start()
     {
@@ -43,7 +48,7 @@ public class BallController : MonoBehaviour
         {
             Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             touchPosition.z = 0;
-
+            audioManager.PlaySFXSound(audioManager.click);
             // Chọn mục tiêu dựa trên vị trí chạm
             Vector2 newTargetPosition = touchPosition.x > transform.position.x
                 ? TargetrIght.position
