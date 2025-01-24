@@ -11,7 +11,8 @@ public class UIManager : MonoBehaviour
     {
         PanelStar.SetActive(false);
         Time.timeScale = 1;
-        audioManager.PlayMucsic();
+         audioManager = GameObject.FindObjectOfType<AudioManager>();
+        audioManager.PlayBackgroundMusic();
     }
     void Start()
     {
@@ -22,7 +23,7 @@ public class UIManager : MonoBehaviour
     {
         PanelGameover.SetActive(true);
         Time.timeScale = 0;
-        audioManager.stopBackMusic();
+        audioManager.StopBackgroundMusic();
       
     }
     //Restart game

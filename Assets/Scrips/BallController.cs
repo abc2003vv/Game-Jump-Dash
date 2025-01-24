@@ -48,7 +48,7 @@ public class BallController : MonoBehaviour
         {
             Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             touchPosition.z = 0;
-            audioManager.PlaySFXSound(audioManager.click);
+            audioManager.PlaySFXSound(audioManager.tab);
             // Chọn mục tiêu dựa trên vị trí chạm
             Vector2 newTargetPosition = touchPosition.x > transform.position.x
                 ? TargetrIght.position

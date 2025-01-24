@@ -5,27 +5,26 @@ using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] AudioSource music;
-    [SerializeField] AudioSource sfx;
+    [SerializeField] AudioSource musicSource; 
+    [SerializeField] AudioSource sfxSource;    
 
-    public AudioClip BrMusic;
-    public AudioClip click;
-
-    public void PlayMucsic()
+    public AudioClip backgroundMusic; // đầu vào âm thanh
+    public AudioClip tab; // đầu vào khi người dùng nhân vào màn hình
+    public void PlayBackgroundMusic()
     {
-        music.clip = BrMusic;
-        music.Play();
-        music.loop = true;
+        musicSource.loop = true; // Lặp  nhạc nền
+        musicSource.clip = backgroundMusic;
+        musicSource.Play();
     }
 
-     public void PlaySFXSound(AudioClip clip)
+    public void PlaySFXSound(AudioClip clip)
     {
-        sfx.PlayOneShot(clip);
+        sfxSource.PlayOneShot(clip);
     }
 
-    public void stopBackMusic()
+    public void StopBackgroundMusic()
     {
-        music.Stop();
+        musicSource.Stop();
     }
 
 }

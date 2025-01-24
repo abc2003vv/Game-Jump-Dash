@@ -4,7 +4,7 @@ public class BackgroundManager : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer; // Sprite Renderer hiển thị ảnh nền
     public Color[] colors; // Mảng các màu sắc
-     public float transitionSpeed = 0.1f; // Tốc độ chuyển đổi màu sắc
+     public float transitionSpeed = 3f; // Tốc độ chuyển đổi màu sắc
     public float changeInterval = 1f; // Thời gian đổi màu
 
     private int currentIndex = 0; // Chỉ số màu hiện tại
@@ -22,6 +22,8 @@ public class BackgroundManager : MonoBehaviour
         }
         // Đặt màu ban đầu
         spriteRenderer.color = colors[currentIndex];
+        // Bắt đầu chuyển đổi màu ngay lập tức
+         StartCoroutine(CrossfadeToNextColor());
     }
 
     void Update()
@@ -35,6 +37,7 @@ public class BackgroundManager : MonoBehaviour
             timer = 0f;
              StartCoroutine(CrossfadeToNextColor()); // Bắt đầu chuyển đổi màu
         }
+        
     }
     private System.Collections.IEnumerator CrossfadeToNextColor()
     {
@@ -50,13 +53,13 @@ public class BackgroundManager : MonoBehaviour
         for (float t = 0f; t <= 1f; t += transitionSpeed * Time.deltaTime)
         {
             spriteRenderer.color = Color.Lerp(currentColor, nextColor, t);
-            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f); // Đảm bảo alpha luôn là 1
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
             yield return null;
         }
 
         // Hoàn tất chuyển đổi màu
         spriteRenderer.color = nextColor;
         currentIndex = nextColorIndex;
-        transitioning = false; // Kết thúc chuyển đổi
+        transitioning = false; 
     }
 }
